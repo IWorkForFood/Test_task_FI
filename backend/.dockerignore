@@ -1,0 +1,5 @@
+docker_compose/
+*.pyc
+.env
+core/project/settings/local.py
+static/*
