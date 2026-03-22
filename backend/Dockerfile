@@ -1,26 +1,21 @@
-FROM python:3.12.5-alpine
+FROM python:3.12-slim
 
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-RUN apk update && \
-    apk add --no-cache python3-dev \
-    gcc \
-    musl-dev \
-    libpq-dev \
-    nmap
+# Минимальные зависимости (psycopg2-binary ставится как wheel, без компиляции)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpq5 \
+    && rm -rf /var/lib/apt/lists/*
 
-ADD pyproject.toml /app
+COPY pyproject.toml poetry.lock* /app/
 
-RUN pip install --upgrade pip
-RUN pip install poetry
-
-RUN poetry config virtualenvs.create false
-RUN poetry install --no-root --no-interaction --no-ansi
+RUN pip install --no-cache-dir --upgrade pip poetry \
+    && poetry config virtualenvs.create false \
+    && poetry install --no-root --no-interaction --no-ansi
 
 COPY . /app/
 COPY entrypoint.sh /entrypoint.sh
-
 RUN chmod +x /entrypoint.sh
