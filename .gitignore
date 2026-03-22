@@ -1,0 +1,45 @@
+# Миграции Django
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+
+# Виртуальные окружения
+.venv/
+venv/
+env/
+.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Логи и БД
+*.log
+*.sqlite3
+*.sqlite
+
+# Node
+node_modules/
+
+# Сборки
+static/
+media/
+dist/
+dist-ssr/
+
+# Локальные настройки
+**/local.py
+*.local

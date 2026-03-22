@@ -75,14 +75,30 @@ class CashFlowRecordViewSet(viewsets.ModelViewSet):
     serializer_class = CashFlowRecordSerializer
 
     def get_queryset(self):
-        return CashFlowRecord.objects.filter(
+        qs = CashFlowRecord.objects.filter(
             user=self.request.user
         ).select_related(
             "status",
             "transaction_type",
             "category",
             "subcategory",
-        ).order_by("-record_date", "-created_at")
+        )
+
+        params = self.request.query_params
+        if params.get("date_from"):
+            qs = qs.filter(record_date__gte=params["date_from"])
+        if params.get("date_to"):
+            qs = qs.filter(record_date__lte=params["date_to"])
+        if params.get("status"):
+            qs = qs.filter(status_id=params["status"])
+        if params.get("transaction_type"):
+            qs = qs.filter(transaction_type_id=params["transaction_type"])
+        if params.get("category"):
+            qs = qs.filter(category_id=params["category"])
+        if params.get("subcategory"):
+            qs = qs.filter(subcategory_id=params["subcategory"])
+
+        return qs.order_by("-record_date", "-created_at")
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

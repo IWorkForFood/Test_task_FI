@@ -70,8 +70,6 @@ class CashFlowRecordSerializer(serializers.ModelSerializer):
     )
     subcategory = serializers.PrimaryKeyRelatedField(
         queryset=Subcategory.objects.none(),
-        allow_null=True,
-        required=False,
     )
 
     def __init__(self, *args, **kwargs):
@@ -104,6 +102,21 @@ class CashFlowRecordSerializer(serializers.ModelSerializer):
             "updated_at",
         )
         read_only_fields = ("created_at", "updated_at")
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["status"] = {"id": instance.status_id, "name": instance.status.name}
+        data["transaction_type"] = {
+            "id": instance.transaction_type_id,
+            "name": instance.transaction_type.name,
+        }
+        data["category"] = {"id": instance.category_id, "name": instance.category.name}
+        data["subcategory"] = (
+            {"id": instance.subcategory_id, "name": instance.subcategory.name}
+            if instance.subcategory_id
+            else None
+        )
+        return data
 
     def validate(self, attrs):
         instance = self.instance

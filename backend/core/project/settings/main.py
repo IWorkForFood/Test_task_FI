@@ -28,7 +28,9 @@ SECRET_KEY = env('DJANGO_SECRET_KEY', default='mysecretkey')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+CSRF_TRUSTED_ORIGINS = ['http://localhost:5173', 'http://127.0.0.1:5173']
 
 
 # Application definition

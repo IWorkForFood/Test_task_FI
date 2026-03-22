@@ -134,8 +134,6 @@ class CashFlowRecord(TimeBaseModel):
         on_delete=models.PROTECT,
         related_name="cash_flow_records",
         verbose_name="Подкатегория",
-        null=True,
-        blank=True,
     )
     amount = models.DecimalField(
         verbose_name="Сумма",
