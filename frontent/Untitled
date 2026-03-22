@@ -1,0 +1,24 @@
+
+## Структура проекта
+
+```
+MyProject/
+├── backend/              # Django API
+│   ├── core/
+│   │   ├── apps/DDS/     # Модели, сервисы ДДС
+│   │   └── api/v1/       # REST API (auth, dds)
+│   ├── .env
+│   ├── .env.example
+│   └── Dockerfile
+├── frontent/             # SPA (Vite + vanilla JS)
+│   ├── src/
+│   ├── Dockerfile
+│   └── nginx.conf
+├── docs/                 # Документация
+├── docker-compose.yml
+├── nginx.conf            # Reverse proxy
+├── Makefile
+└── README.md
+```
+
+---

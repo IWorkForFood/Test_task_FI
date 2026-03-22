@@ -24,6 +24,10 @@ down:
 logs:
 	$(DC) logs -f
 
+.PHONY: migrations
+migrations:
+	$(DC) exec backend python manage.py makemigrations
+
 .PHONY: migrate
 migrate:
 	$(DC) exec backend python manage.py migrate

@@ -1,18 +1,15 @@
-# Запуск
+# Развёртывание
+
+Краткая справка по запуску. Полная документация — [README.md](README.md).
+
+## Быстрый старт
 
 ```bash
-# 1. Создать .env (если ещё нет)
 cp backend/.env.example backend/.env
-
-# 2. Запустить всё
 make up-build
 ```
 
-Приложение: http://localhost
-
-- `/` — фронтенд
-- `/api/` — API
-- `/admin/` — админ-панель Django
+Приложение: **http://localhost**
 
 ## Схема nginx
 
@@ -22,3 +19,11 @@ make up-build
 | /api/    | backend:8000   |
 | /admin/  | backend:8000   |
 | /static/ | backend:8000   |
+
+## Команды
+
+- `make up` — запустить
+- `make down` — остановить
+- `make migrations` — создание миграций
+- `make migrate` — выполнение миграций
+- `make superuser` — создать админа
