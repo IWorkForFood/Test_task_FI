@@ -19,3 +19,6 @@ RUN pip install --no-cache-dir --upgrade pip poetry \
 COPY . /app/
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+
+EXPOSE 8000
+CMD ["/entrypoint.sh"]
