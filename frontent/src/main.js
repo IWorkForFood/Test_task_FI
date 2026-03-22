@@ -438,7 +438,7 @@ async function renderRecordForm(recordId) {
           </div>
           <div class="field">
             <label for="record-amount">Сумма (₽)</label>
-            <input id="record-amount" name="amount" type="number" step="0.01" required placeholder="0">
+            <input id="record-amount" name="amount" type="number" step="0.01" min="0" required placeholder="0">
           </div>
           <div class="field">
             <label for="record-comment">Комментарий</label>
@@ -505,7 +505,7 @@ async function renderRecordForm(recordId) {
     document.getElementById('form-loading').classList.add('hidden');
     document.getElementById('record-form').classList.remove('hidden');
 
-    typeSelect.addEventListener('change', async () => {
+    const loadCategoriesForType = async () => {
       const tid = typeSelect.value;
       document.getElementById('record-category').innerHTML =
         '<option value="">— Выберите —</option>';
@@ -515,7 +515,14 @@ async function renderRecordForm(recordId) {
         const cats = await getCategories(tid);
         fillSelect('record-category', cats, true);
       }
-    });
+    };
+
+    typeSelect.addEventListener('change', loadCategoriesForType);
+
+    // Загрузить категории, если тип уже выбран (например, первый в списке)
+    if (typeSelect.value) {
+      await loadCategoriesForType();
+    }
 
     document.getElementById('record-category').addEventListener('change', async () => {
       const cid = document.getElementById('record-category').value;

@@ -138,4 +138,10 @@ class CashFlowRecordSerializer(serializers.ModelSerializer):
                 {"subcategory": "Подкатегория не относится к выбранной категории."}
             )
 
+        amount = attrs.get("amount")
+        if amount is not None and amount < 0:
+            raise serializers.ValidationError(
+                {"amount": "Сумма не может быть отрицательной."}
+            )
+
         return attrs

@@ -1,6 +1,7 @@
 from datetime import date
 
 from django.conf import settings
+from django.core.validators import MinValueValidator
 from django.db import models
 
 from core.apps.common.models import TimeBaseModel
@@ -140,6 +141,7 @@ class CashFlowRecord(TimeBaseModel):
         max_digits=12,
         decimal_places=2,
         help_text="Сумма в рублях",
+        validators=[MinValueValidator(0)],
     )
     comment = models.TextField(
         verbose_name="Комментарий",

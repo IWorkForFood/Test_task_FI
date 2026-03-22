@@ -7,10 +7,10 @@ DEFAULT_STATUSES = ["Бизнес", "Личное", "Налог"]
 
 DEFAULT_TRANSACTION_TYPES = ["Пополнение", "Списание"]
 
-# (категория, [подкатегории]) — все привязаны к типу "Списание"
+# (тип_операции, (категория, [подкатегории]))
 DEFAULT_CATEGORIES = [
-    ("Инфраструктура", ["VPS", "Proxy"]),
-    ("Маркетинг", ["Farpost", "Avito"]),
+    ("Списание", ("Инфраструктура", ["VPS", "Proxy"])),
+    ("Пополнение", ("Маркетинг", ["Farpost", "Avito"])),
 ]
 
 
@@ -21,17 +21,14 @@ def create_default_dds_data(user):
         Status.objects.get_or_create(user=user, name=name)
 
     # Типы операций
-    type_popolnenie, _ = TransactionType.objects.get_or_create(
-        user=user, name="Пополнение"
-    )
-    type_spisanie, _ = TransactionType.objects.get_or_create(
-        user=user, name="Списание"
-    )
+    types = {}
+    for name in DEFAULT_TRANSACTION_TYPES:
+        types[name], _ = TransactionType.objects.get_or_create(user=user, name=name)
 
-    # Категории и подкатегории (для типа "Списание")
-    for category_name, subcategory_names in DEFAULT_CATEGORIES:
+    # Категории и подкатегории
+    for type_name, (category_name, subcategory_names) in DEFAULT_CATEGORIES:
         category, _ = Category.objects.get_or_create(
-            transaction_type=type_spisanie,
+            transaction_type=types[type_name],
             name=category_name,
         )
         for sub_name in subcategory_names:
