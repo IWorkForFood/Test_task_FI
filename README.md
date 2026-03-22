@@ -30,18 +30,18 @@ cd Test_task_FI
 # 2. Создать файл для своих переменных окружения и задать их
 cp backend/.env.example backend/.env
 
-# 3. Создать миграции
-make migrations
-# Без make: docker compose exec backend python manage.py makemigrations
-
-# 4. Выполнить миграции
-make migrate
-# Без make: docker compose exec backend python manage.py migrate
-
-# 5. Запустить
+# 3. Запустить
 make up-build
 # Без make:
 # docker compose --env-file backend/.env up --build -d
+
+# 4. Создать миграции
+make migrations
+# Без make: docker compose exec backend python manage.py makemigrations
+
+# 5. Выполнить миграции
+make migrate
+# Без make: docker compose exec backend python manage.py migrate
 ```
 
 Приложение: **http://localhost**
