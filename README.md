@@ -25,7 +25,7 @@
 ```bash
 # 1. Клонировать репозиторий
 git clone <repo-url>
-cd MyProject
+cd Test_task_FI
 
 # 2. Создать файл для своих переменных окружения и задать их
 cp backend/.env.example backend/.env
