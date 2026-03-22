@@ -122,9 +122,3 @@ make superuser
 
 - [docs/API.md](docs/API.md) — описание REST API
 - [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) — разработка и отладка
-
----
-
-## Лицензия
-
-MIT
