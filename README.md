@@ -32,6 +32,8 @@ cp backend/.env.example backend/.env
 
 # 3. Запустить
 make up-build
+# Без make:
+# docker compose --env-file backend/.env up --build -d
 ```
 
 Приложение: **http://localhost**
@@ -68,6 +70,7 @@ make up-build
    ```bash
    make up-build
    ```
+   Без make: `docker compose --env-file backend/.env up --build -d`
 
 ---
 
@@ -94,13 +97,16 @@ make superuser
 
 ## Запуск веб-сервиса
 
-| Команда | Описание |
-|---------|----------|
-| `make up-build` | Собрать образы и запустить |
-| `make up` | Запустить (без пересборки) |
-| `make down` | Остановить |
-| `make build` | Только собрать образы |
-| `make logs` | Логи всех сервисов |
+| Команда | Описание | Аналог (без make) |
+|---------|----------|-------------------|
+| `make up-build` | Собрать образы и запустить | `docker compose --env-file backend/.env up --build -d` |
+| `make up` | Запустить (без пересборки) | `docker compose --env-file backend/.env up -d` |
+| `make down` | Остановить | `docker compose down` |
+| `make build` | Только собрать образы | `docker compose --env-file backend/.env build` |
+| `make logs` | Логи всех сервисов | `docker compose logs -f` |
+| `make migrate` | Применить миграции | `docker compose exec backend python manage.py migrate` |
+| `make migrations` | Создать миграции | `docker compose exec backend python manage.py makemigrations` |
+| `make superuser` | Создать суперпользователя | `docker compose exec backend python manage.py createsuperuser` |
 
 ### Доступные URL
 
