@@ -30,7 +30,15 @@ cd Test_task_FI
 # 2. Создать файл для своих переменных окружения и задать их
 cp backend/.env.example backend/.env
 
-# 3. Запустить
+# 3. Создать миграции
+make migrations
+# Без make: docker compose exec backend python manage.py makemigrations
+
+# 4. Выполнить миграции
+make migrate
+# Без make: docker compose exec backend python manage.py migrate
+
+# 5. Запустить
 make up-build
 # Без make:
 # docker compose --env-file backend/.env up --build -d
@@ -49,29 +57,6 @@ make up-build
 
 Отдельная установка Python или Node.js не требуется.
 
-### Шаги
-
-1. **Клонирование репозитория**
-   ```bash
-   git clone <repo-url>
-   cd MyProject
-   ```
-
-2. **Настройка переменных окружения**
-   ```bash
-   cp backend/.env.example backend/.env
-   ```
-   
-   Отредактируйте `backend/.env` при необходимости:
-   - `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD` — доступ к PostgreSQL
-   - `DJANGO_SECRET_KEY` — секретный ключ 
-
-3. **Запуск**
-   ```bash
-   make up-build
-   ```
-   Без make: `docker compose --env-file backend/.env up --build -d`
-
 ---
 
 ## Настройка базы данных
@@ -81,16 +66,19 @@ make up-build
 Ручной запуск миграций:
 ```bash
 make migrate
+# Без make: docker compose exec backend python manage.py migrate
 ```
 
 Создание миграций:
 ```bash
 make migrations
+# Без make: docker compose exec backend python manage.py makemigrations
 ```
 
 Создание суперпользователя Django (для `/admin/`):
 ```bash
 make superuser
+# Без make: docker compose exec backend python manage.py createsuperuser
 ```
 
 ---
